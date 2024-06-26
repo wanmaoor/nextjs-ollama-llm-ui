@@ -23,8 +23,9 @@ const useSpeechToText = (options: SpeechRecognitionOptions = {}) => {
     recognition.interimResults = options.interimResults || true;
     recognition.lang = options.lang || "en-US";
     recognition.continuous = options.continuous || false;
-
-    if ("webkitSpeechGrammarList" in window) {
+    const hasSpeechGrammarList = "webkitSpeechGrammarList" in window;
+    console.info('🚀🚀', 'hasSpeechGrammarList -->', hasSpeechGrammarList, `<-- useSpeechRecognition.ts/`)
+    if (hasSpeechGrammarList) {
       const grammar =
         "#JSGF V1.0; grammar punctuation; public <punc> = . | , | ! | ; | : ;";
       const speechRecognitionList = new window.webkitSpeechGrammarList();
@@ -34,6 +35,7 @@ const useSpeechToText = (options: SpeechRecognitionOptions = {}) => {
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       let text = "";
+      console.info('🚀🚀', 'event -->', event, `<-- useSpeechRecognition.ts/onresult`)
 
       for (let i = 0; i < event.results.length; i++) {
         text += event.results[i][0].transcript;
@@ -67,6 +69,8 @@ const useSpeechToText = (options: SpeechRecognitionOptions = {}) => {
   };
 
   const stopListening = () => {
+    console.info('🚀🚀', 'recognitionRef.current -->', recognitionRef.current?.stop, `<-- useSpeechRecognition.ts/stopListening`)
+    console.info('🚀🚀', 'isListening -->', isListening, `<-- useSpeechRecognition.ts/stopListening`)
     if (recognitionRef.current && isListening) {
       recognitionRef.current.stop();
       setIsListening(false);

@@ -10,6 +10,7 @@ import { Message, useChat } from "ai/react";
 import React, { useEffect } from "react";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
+import {extendChatRequestOptions} from "@/components/chat/chat";
 
 export default function Page({ params }: { params: { id: string } }) {
   const {
@@ -121,7 +122,7 @@ export default function Page({ params }: { params: { id: string } }) {
     setMessages([...messages]);
 
     // Prepare the options object with additional body data, to pass the model.
-    const requestOptions: ChatRequestOptions = {
+    const requestOptions: extendChatRequestOptions = {
       options: {
         body: {
           selectedModel: selectedModel,

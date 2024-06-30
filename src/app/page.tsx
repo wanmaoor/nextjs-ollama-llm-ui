@@ -20,6 +20,7 @@ import { Message, useChat } from "ai/react";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
+import {ChatProps, extendChatRequestOptions} from "@/components/chat/chat";
 
 export default function Home() {
   const {
@@ -139,20 +140,22 @@ export default function Home() {
     }
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>, payload: extendChatRequestOptions) => {
     e.preventDefault();
     setLoadingSubmit(true);
 
     setMessages([...messages]);
 
     // Prepare the options object with additional body data, to pass the model.
-    const requestOptions: ChatRequestOptions = {
+    const requestOptions: extendChatRequestOptions = {
       options: {
         body: {
           selectedModel: selectedModel,
+          ...payload
         },
       },
     };
+    console.info('🚀🚀', 'requestOptions -->', requestOptions, `<-- page.tsx/onSubmit`)
 
     if (env === "production") {
       handleSubmitProduction(e);
@@ -162,7 +165,7 @@ export default function Home() {
     }
   };
 
-  const onOpenChange = (isOpen: boolean) => { 
+  const onOpenChange = (isOpen: boolean) => {
     const username = localStorage.getItem("ollama_user")
     if (username) return setOpen(isOpen)
 
@@ -170,7 +173,7 @@ export default function Home() {
     window.dispatchEvent(new Event("storage"))
     setOpen(isOpen)
   }
-  
+
   return (
     <main className="flex h-[calc(100dvh)] flex-col items-center ">
       <Dialog open={open} onOpenChange={onOpenChange}>

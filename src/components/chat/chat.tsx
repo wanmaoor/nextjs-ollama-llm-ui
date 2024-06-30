@@ -5,7 +5,7 @@ import ChatBottombar from "./chat-bottombar";
 import { Message, useChat } from "ai/react";
 import { ChatRequestOptions } from "ai";
 import { v4 as uuidv4 } from "uuid";
-
+export type extendChatRequestOptions = ChatRequestOptions & {images?: string[]};
 export interface ChatProps {
   chatId?: string;
   setSelectedModel: React.Dispatch<React.SetStateAction<string>>;
@@ -14,7 +14,7 @@ export interface ChatProps {
   handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    chatRequestOptions?: ChatRequestOptions
+    chatRequestOptions?: extendChatRequestOptions
   ) => void;
   isLoading: boolean;
   loadingSubmit?: boolean;

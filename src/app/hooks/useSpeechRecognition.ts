@@ -24,7 +24,6 @@ const useSpeechToText = (options: SpeechRecognitionOptions = {}) => {
     recognition.lang = options.lang || "en-US";
     recognition.continuous = options.continuous || false;
     const hasSpeechGrammarList = "webkitSpeechGrammarList" in window;
-    console.info('🚀🚀', 'hasSpeechGrammarList -->', hasSpeechGrammarList, `<-- useSpeechRecognition.ts/`)
     if (hasSpeechGrammarList) {
       const grammar =
         "#JSGF V1.0; grammar punctuation; public <punc> = . | , | ! | ; | : ;";
@@ -69,8 +68,6 @@ const useSpeechToText = (options: SpeechRecognitionOptions = {}) => {
   };
 
   const stopListening = () => {
-    console.info('🚀🚀', 'recognitionRef.current -->', recognitionRef.current?.stop, `<-- useSpeechRecognition.ts/stopListening`)
-    console.info('🚀🚀', 'isListening -->', isListening, `<-- useSpeechRecognition.ts/stopListening`)
     if (recognitionRef.current && isListening) {
       recognitionRef.current.stop();
       setIsListening(false);

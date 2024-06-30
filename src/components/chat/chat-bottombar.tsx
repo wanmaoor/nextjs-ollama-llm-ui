@@ -53,7 +53,7 @@ export default function ChatBottombar({
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+      handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>, {images: base64Images});
     }
   };
 
@@ -174,7 +174,7 @@ export default function ChatBottombar({
               }
             </div>
             <form
-              onSubmit={handleSubmit}
+              onSubmit={(e) => handleSubmit(e, {images: base64Images})}
               className="w-full items-center flex relative gap-2"
             >
               <TextareaAutosize
